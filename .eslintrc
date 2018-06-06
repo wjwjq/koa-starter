@@ -1,0 +1,17 @@
+{
+  "extends": "koa",
+  "parserOptions": {
+    "ecmaVersion": 2017
+  },
+  "rules": {
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "always",
+        "named": "never",
+        "asyncArrow": "always"
+      }
+    ],
+    "no-return-await": "off"
+  }
+}
