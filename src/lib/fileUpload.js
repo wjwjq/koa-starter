@@ -27,15 +27,17 @@ async function fileUpload(ctx, next, savedPath = '') {
     const filePathPromises = [];
     const files = ctx.request.body.files || {};
 
-    for (let key in files) {
-      if (Array.isArray(files[key])) {
-        for (let i = 0; i < files[key].length; i++) {
-          filePathPromises.push(saveSingleFile(files[key][i], tmpdir));
+    // Object.values(files).forEach(file => filePathPromises.push(...(Array.isArray(file) ? file.map(val => saveSingleFile(val, tmpdir)) : [saveSingleFile(file, tmpdir)])));
+
+    Object.values(files).forEach(file => {
+      if (Array.isArray(file)) {
+        for (let i = 0; i < file.length; i++) {
+          filePathPromises.push(saveSingleFile(file[i], tmpdir));
         }
       } else {
-        filePathPromises.push(saveSingleFile(files[key], tmpdir));
+        filePathPromises.push(saveSingleFile(file, tmpdir));
       }
-    }
+    });
 
     return Promise.all(filePathPromises);
   } catch (err) {
